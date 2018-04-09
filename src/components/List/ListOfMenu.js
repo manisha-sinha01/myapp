@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View,Text,StyleSheet,TouchableOpacity,ScrollView } from 'react-native';
 import { Container,Header,Body,Card,CardItem,Left,Icon,List,ListItem } from 'native-base';
-import {Actions} from 'react-native-router-flux';
+
 import Dimensions from 'Dimensions';
 import {TabNavigator,StackNavigator} from 'react-navigation';
 
@@ -33,7 +33,7 @@ export default class ListOfMenu extends Component {
            <ListItem>
 
              <Body>
-             <TouchableOpacity onPress = {() => navigate('TeaReports')}>
+             <TouchableOpacity onPress = {() => {}}>
              <Text style={{fontWeight: 'bold'}}>TEA REPORTS</Text>
              </TouchableOpacity>
              </Body>

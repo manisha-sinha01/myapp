@@ -1,5 +1,5 @@
 import  React , { Component } from 'react';
-import { Text,View,ListView,ScrollView,StyleSheet,TouchableOpacity,ActivityIndicator } from 'react-native';
+import { Text,View,ListView,ScrollView,StyleSheet,TouchableOpacity,TouchableHighlight,ActivityIndicator } from 'react-native';
 import { ListItem,List,Left,Body,Right,Icon,Fab,Button } from 'native-base';
 
 import s from './styles.js';
@@ -73,7 +73,7 @@ export default class DataDisplay extends Component {
    console.log(url);
     fetch(url + '&limit_page_length='+this.page_length)
     .then((response) => response.json())
-    .then( (responseJson) => {
+    .then((responseJson) => {
        this.setState({
          new: [ ...this.state.new, ...responseJson.data ]
        });
@@ -83,9 +83,20 @@ export default class DataDisplay extends Component {
   }
 
   render(){
-    const sold= <Text> SOLD </Text>;
-    const unsold = <Text> UNSOLD </Text> ;
-    return (
+    const {navigate} = this.props.navigation;
+     const sold= <Text> SOLD </Text>;
+   const unsold = <Text> UNSOLD </Text> ;
+    if(this.state.new ===[]){
+      return(
+        <View>
+          <Text> No Data Found ! </Text>
+        </View>
+      )
+    }
+  else{
+    return(
+
+
      <View enableEmptySections={true}>
 
      <ScrollView enableEmptySections={true}>
@@ -97,10 +108,13 @@ export default class DataDisplay extends Component {
                 <ListItem style={{height: 100}}>
 
                    <Body>
+                   <TouchableHighlight onPress={() => {navigate('DataPrint',{
+                     url : 'https://runga.rungamatteegroup.com/api/resource/Tea%20Invoice/'+rowData.name
+                   })}}>
                    <Text style={{fontWeight: 'bold'}}>
                        {rowData.invpr}-{rowData.invsuf} {rowData.grade}
                     </Text>
-
+                     </TouchableHighlight>
                    <Text>
                       TOTAL WEIGHT : {rowData.kgs}
                    </Text>
@@ -130,4 +144,5 @@ export default class DataDisplay extends Component {
 
     );
   }
+}
 }

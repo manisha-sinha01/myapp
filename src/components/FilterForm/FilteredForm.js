@@ -34,14 +34,14 @@ var options= {
   fields: {
 
      grade: {
-       label: 'GRADE',
-       error: 'Insert a value to proceed',
+       label: 'TEA INVOICE GRADE',
+       error: 'Insert a value to proceed'
      },
      invpr: {
-       label:'PREFIX'
+       label:'TEA INVOICE PREFIX'
      },
      invsuf: {
-       label: 'SUFFIX'
+       label: 'TEA INVOICE SUFFIX'
      },
      teatype: {
        label: 'TEA TYPES',
@@ -56,13 +56,18 @@ export default class FilteredForm extends Component {
        super(props);
        this.state={
          queryString: '',
-         doctype: 'Tea Invoice'
+         doctype: 'Tea Invoice',
+         name : '',
 
        }
-       url= 'https://runga.rungamatteegroup.com/api/resource/'+this.state.doctype+'/?fields=["invpr","invsuf","grade","status","dop","kgs","mark","tea_brand","fineleaf","sold_rate","sale_date","customer"]'
+       url= 'https://runga.rungamatteegroup.com/api/resource/'+this.state.doctype+'/?fields=["name","invpr","invsuf","grade","status","dop","kgs","mark","tea_brand","fineleaf","sold_rate","sale_date","customer"]'
 
    }
-
+   componentDidMount(){
+     const { params } = this.props.navigation.state;
+     const name = params? params.name : null;
+     this.setState({name: name})
+   }
   clearform= () => {
     this.setState({
       value:null
@@ -110,7 +115,7 @@ export default class FilteredForm extends Component {
   }
 
   handleSubmit = () => {
-    var url = 'https://runga.rungamatteegroup.com/api/resource/Tea Invoice/?fields=["invpr","invsuf","grade","status","dop","kgs","mark","tea_brand","fineleaf","sold_rate","sale_date","customer"]';
+    var url = 'https://runga.rungamatteegroup.com/api/resource/Tea Invoice/?fields=["name","invpr","invsuf","grade","status","dop","kgs","mark","tea_brand","fineleaf","sold_rate","sale_date","customer"]';
     const value= this._form.getValue();
 
     var queryString= this.urlFormation(value);
@@ -137,7 +142,7 @@ export default class FilteredForm extends Component {
         behavior= 'padding'
          style={styles.container}
         enableEmptySections={true}>
-       <Text style={{fontWeight: 'bold'}}> Please Fill In The Details Below </Text>
+       <Text style={{fontWeight: 'bold'}}> Please Fill In The Details Below for {this.state.name} </Text>
        <Card>
        <ScrollView>
         <CardItem>

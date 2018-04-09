@@ -2,33 +2,37 @@ import React , { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Icon } from 'native-base';
 import { StackNavigator,TabNavigator,DrawerNavigator } from 'react-navigation';
-
+import DataPrint from './src/components/GardenTabs/DataPrint.js'
 import ListOfMenu from './src/components/List/ListOfMenu.js';
 import LoginForm from './src/components/LoginScreen/Form1.js';
-import options from './src/components/GardenTabs/options.js';
-import FilteredForm from './src/components/SecondScreen/FilteredForm.js';
-import DataDisplay from './src/components/ThirdScreen/DataDisplay.js';
+
+import FilteredForm from './src/components/FilterForm/FilteredForm.js';
+import DataDisplay from './src/components/FilteredData/DataDisplay.js';
 import MainPage from './src/components/common/MainPage.js';
 import Ghatia from './src/components/GardenTabs/Ghatia.js';
 import Mazbat from './src/components/GardenTabs/Mazbat.js';
 import Chandighat from './src/components/GardenTabs/Chandighat.js';
 import Ghilidary from './src/components/GardenTabs/Ghilidary.js';
 
-const stackNav1 = StackNavigator({
 
+const stackNav1 = StackNavigator({
   FilteredForm: {screen: FilteredForm},
-  DataDisplay: {screen: DataDisplay},
+  DataDisplay : {screen : DataDisplay},
+  DataPrint : {screen: DataPrint}
 },
 {
   headerMode: 'none',
   navigationOptions: {
       headerVisible: false,
   }
-})
+}
+)
 
 const GhatiaStack = StackNavigator({
   Ghatia : { screen: Ghatia},
-  stackNav1: {screen: stackNav1}
+  DataPrint : {screen: DataPrint},
+  stackNav1: {screen: stackNav1},
+
 },
 {
   headerMode: 'none',
@@ -39,7 +43,9 @@ const GhatiaStack = StackNavigator({
 
 const MazbatStack = StackNavigator({
   Mazbat : { screen: Mazbat},
-  stackNav1: {screen: stackNav1}
+  DataPrint : {screen: DataPrint},
+  stackNav1: {screen: stackNav1},
+
 },
 {
   headerMode: 'none',
@@ -50,7 +56,9 @@ const MazbatStack = StackNavigator({
 
 const ChandighatStack = StackNavigator({
   Chandighat : { screen: Chandighat},
-  stackNav1: {screen: stackNav1}
+  DataPrint : {screen: DataPrint},
+  stackNav1: {screen: stackNav1},
+
 },
 {
   headerMode: 'none',
@@ -61,7 +69,8 @@ const ChandighatStack = StackNavigator({
 
 const GhilidaryStack = StackNavigator({
   Ghilidary : { screen: Ghilidary},
-  stackNav1: {screen: stackNav1}
+  stackNav1: {screen: stackNav1},
+
 },
 {
   headerMode: 'none',
@@ -81,20 +90,11 @@ const TeaInvoice = TabNavigator({
   tabBarPosition:'bottom',
 })
 
-const TeaReports = TabNavigator({
-  GHT : {screen: stackNav1},
-  MZT : {screen: stackNav1},
-  CGT : {screen: stackNav1},
-  GHD : {screen: stackNav1},
- },
- {
- tabBarPosition:'bottom',
-})
 
 const stackNavNew = StackNavigator({
   ListOfMenu : {screen : ListOfMenu},
   TeaInvoice : {screen : TeaInvoice},
-  TeaReports : {screen : TeaReports}
+
 },
 {
   headerMode: 'none',
@@ -106,8 +106,6 @@ const stackNavNew = StackNavigator({
 const stackAccess= StackNavigator({
   ListOfMenu : {screen : stackNavNew},
   TeaInvoice : {screen : TeaInvoice},
-  TeaReports : {screen : TeaReports},
-
 },
 {
     headerMode: 'none',
@@ -130,7 +128,7 @@ const LoginStack = StackNavigator({
 const DrawerStack = DrawerNavigator({
   'List Of Menu': {screen: stackAccess},
   'Tea Invoice' : {screen : TeaInvoice},
-  'Tea Reports' : {screen: TeaReports},
+
     'Extra' : {screen : MainPage},
 })
 

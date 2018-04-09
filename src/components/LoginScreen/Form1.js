@@ -55,15 +55,6 @@ export default class Form1 extends Component {
     }
   }
 
- /*getInitialState = () => {
-   return {
-     value : {
-       username: this.state.d.username,
-       password: this.state.d.password
-     }
-   }
- }*/
-
   handleSubmit = async() => {
     Keyboard.dismiss();
     const value=this._form.getValue();
@@ -80,11 +71,7 @@ export default class Form1 extends Component {
      {
           let myArray = {username: username,
                        password: password}
-            //const myArray = Object.assign({},this.state.myArray,{username : username});
-          //  myArray = Object.assign({},this.state.myArray,{password : password});
-           /*this.setState({
-             myArray
-           });*/
+
 
            AsyncStorage.setItem("myArray",JSON.stringify(myArray));
          }
@@ -185,11 +172,14 @@ export default class Form1 extends Component {
              type={User}
              options= {options}/>
              <View style={styles.btn}>
+          <View style={styles.btnView}>
         <Button title="Login"
                 onPress={this.handleSubmit}/>
+                <Text style={styles.txt}> OR </Text>
                 <Button onPress = {this.loginAgain}
                  style= {{paddingLeft: 45}}
-                title= "LOGIN AS REMEMBERED USER"/>
+                title= "REMEMBERED USER"/>
+            </View>
          </View>
     </KeyboardAvoidingView>
     </Wallpaper>
@@ -201,6 +191,13 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
 const styles=StyleSheet.create({
+  btnView:{
+    paddingLeft:60
+  },
+  txt: {
+    paddingLeft:60,
+    color:'white'
+  },
   btn: {
     flexDirection: 'row'
   },

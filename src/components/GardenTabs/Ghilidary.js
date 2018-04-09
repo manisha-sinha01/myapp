@@ -1,20 +1,39 @@
 import React, {Component} from 'react';
-import { Text,View,ListView,ScrollView,TouchableOpacity,StyleSheet,ActivityIndicator} from 'react-native';
+import { Text,View,ListView,ScrollView,TouchableOpacity,StyleSheet,TouchableHighlight,ActivityIndicator} from 'react-native';
 import { ListItem,List,Left,Body,Right,Icon,Fab,Button } from 'native-base';
 import s from './styles.js';
 
-export default class Ghatia extends Component {
+export default class Ghilidary extends Component {
   constructor(props){
     super(props);
     this.page_length=20,
     this.state = {
       new: [],
       fetching_from_server: false,
-      url: 'https://runga.rungamatteegroup.com/api/resource/Tea Invoice?fields=["invpr","invsuf","grade","status","dop","kgs","mark","tea_brand","fineleaf","sold_rate","sale_date","customer"]&filters=[["Tea Invoice", "estatename", "=", "Ghillidary Tea Estate"]]&limit_page_length='+this.page_length,
+      url: 'https://runga.rungamatteegroup.com/api/resource/Tea Invoice?fields=["name","invpr","invsuf","grade","status","dop","kgs","mark","tea_brand","fineleaf","sold_rate","sale_date","customer"]&filters=[["Tea Invoice", "estatename", "=", "Ghillidary Tea Estate"]]&limit_page_length='+this.page_length,
 
     }
     this.ds= new ListView.DataSource({rowHasChanged: (r1,r2) => r1!==r2});
   }
+
+  renderHeader1(){
+    return(
+      <View
+      style={s.footer}>
+      <TouchableOpacity activeOpacity = { 0.9 }
+      onPress={() => {this.props.navigation.navigate('FilteredForm',{
+        queryString: '["Tea Invoice", "estatename", "=", "Ghillidary Tea Estate"]',
+        name : 'Ghilidary'
+      })}}
+      style={s.loadMoreBtn}>
+          <Text>Filter Data</Text>
+
+      </TouchableOpacity>
+     </View>
+    );
+  }
+
+
 
   loadMoreData = () => {
     this.page_length = this.page_length + 20;
@@ -27,7 +46,7 @@ export default class Ghatia extends Component {
 
           this.timer = setTimeout(() =>
           {
-              fetch('https://runga.rungamatteegroup.com/api/resource/Tea Invoice?fields=["invpr","invsuf","grade","status","dop","kgs","mark","tea_brand","fineleaf","sold_rate","sale_date","customer"]&filters=[["Tea Invoice", "estatename", "=", "Ghillidary Tea Estate"]]&limit_page_length='+this.page_length)
+              fetch('https://runga.rungamatteegroup.com/api/resource/Tea Invoice?fields=["name","invpr","invsuf","grade","status","dop","kgs","mark","tea_brand","fineleaf","sold_rate","sale_date","customer"]&filters=[["Tea Invoice", "estatename", "=", "Ghillidary Tea Estate"]]&limit_page_length='+this.page_length)
               .then((response) => response.json())
               .then((responseJson) =>
               {
@@ -50,7 +69,7 @@ export default class Ghatia extends Component {
              {
                  ( this.state.fetching_from_server )
                  ?
-                     <ActivityIndicator color = "white" style = {{ marginLeft: 8 }} />
+                     <ActivityIndicator color = "black" style = {{ marginLeft: 8 }} />
                  :
                      null
              }
@@ -62,7 +81,7 @@ export default class Ghatia extends Component {
   componentDidMount(){
 
 
-    const url= 'https://runga.rungamatteegroup.com/api/resource/Tea Invoice?fields=["invpr","invsuf","grade","status","dop","kgs","mark","tea_brand","fineleaf","sold_rate","sale_date","customer"]&filters=[["Tea Invoice", "estatename", "=", "Ghillidary Tea Estate"]]&limit_page_length='+this.page_length;
+    const url= 'https://runga.rungamatteegroup.com/api/resource/Tea Invoice?fields=["name","invpr","invsuf","grade","status","dop","kgs","mark","tea_brand","fineleaf","sold_rate","sale_date","customer"]&filters=[["Tea Invoice", "estatename", "=", "Ghillidary Tea Estate"]]&limit_page_length='+this.page_length;
     console.log(this.state.url);
     fetch(this.state.url)
     .then((response) => response.json())
@@ -80,19 +99,25 @@ export default class Ghatia extends Component {
     return(
       <View enableEmptySections={true}>
 
+
        <ScrollView enableEmptySections={true}>
 
          <ListView
               enableEmptySections={true}
               dataSource={this.ds.cloneWithRows(this.state.new)}
+               renderHeader = {this.renderHeader1.bind(this)}
                renderRow={(rowData) => <ScrollView>
                  <ListItem style={{height: 100}}>
 
                     <Body>
+                    <TouchableHighlight onPress={() => {
+                      this.props.navigation.navigate('DataPrint',{
+                      url : 'https://runga.rungamatteegroup.com/api/resource/Tea%20Invoice/'+rowData.name
+                    })}}>
                     <Text style={{fontWeight: 'bold'}}>
                         {rowData.invpr}-{rowData.invsuf} {rowData.grade}
                      </Text>
-
+                     </TouchableHighlight>
                     <Text>
                        TOTAL WEIGHT : {rowData.kgs}
                     </Text>
@@ -116,22 +141,6 @@ export default class Ghatia extends Component {
                    </ScrollView>}
                    renderFooter= {this.renderFooter1.bind(this)}
                   />
-                 <Fab
-                  active={this.state.active}
-                  direction="up"
-                  style={{ backgroundColor: '#5067FF' }}
-                  position="bottomRight"
-                  onPress={() => this.setState({ active: !this.state.active })}>
-                  <Icon name="menu" />
-                     <Button style={{ backgroundColor: '#34A34F' }}
-                      onPress={() => {this.props.navigation.navigate('FilteredForm',{
-                        queryString: '["Tea Invoice", "estatename", "=", "Ghillidary Tea Estate"]'
-                      })}}>
-
-                       <Icon name="search" />
-                     </Button>
-
-                 </Fab>
 
          </ScrollView>
 

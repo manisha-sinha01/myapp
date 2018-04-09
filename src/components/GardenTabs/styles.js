@@ -15,7 +15,7 @@ const style = StyleSheet.create({
   loadMoreBtn:
   {
     padding: 10,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: 'white',
     borderRadius: 4,
     flexDirection: 'row',
     justifyContent: 'center',
